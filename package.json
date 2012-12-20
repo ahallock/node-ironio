@@ -1,0 +1,29 @@
+{
+  "name": "ironio",
+  "version": "0.0.0",
+  "description": "ironio ======",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha -t 10000 test/*-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ahallock/ironio.git"
+  },
+  "author": "Andrew Hallock <andrew@blazelocal.com>",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/caolan/async/raw/master/LICENSE"
+    }
+  ],
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "request": "~2.12.0"
+  },
+  "devDependencies": {
+    "should": "~1.2.1",
+    "nock": "~0.14.2",
+    "mocha": "~1.7.4"
+  }
+}
