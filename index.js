@@ -3,7 +3,7 @@
  */
 var Cache = require('./lib/cache')
   , Queue = require('./lib/queue')
-  , Task = require('./lib/task')
+  , task = require('./lib/task')
   , join = require('path').join
   , querystring = require('querystring')
   ;
@@ -48,7 +48,7 @@ function ironio(token, options) {
 
     // 'tasks' needs some specialization
     // to make the API nicer
-    var tasks = Task(join(projectPath, 'tasks'), api);
+    var tasks = task(join(projectPath, 'tasks'), api);
     tasks.list = createListFn('tasks');
     tasks.scheduled.list = createListFn('schedules');
 
