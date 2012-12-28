@@ -17,7 +17,7 @@ var Cache = require('./lib/cache')
  * @api public
  */
 function ironio(token, options) {
-  var api = require('./lib/api')(options);
+  var api = require('./lib/api')(token, options);
   var path = 'projects';
 
   function projects(id) {
