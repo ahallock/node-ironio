@@ -8,7 +8,7 @@ for more details. node-ironio is inspired by seebees' ironmq module: https://git
 
 ## Examples
 ```javascript
-var ironio = require('ironio')('OAuth token')
+var ironio = require('node-ironio')('OAuth token')
   , project = ironio.projects('Project ID');
 
 // IronMQ
