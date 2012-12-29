@@ -26,6 +26,10 @@ describe('Cache', function() {
     .reply(200, {
       "size": 1
     })
+    .delete(projectPath + '/caches/mycache')
+    .reply(200, {
+      "msg": "Deleted"
+    })
     .post(projectPath + '/caches/mycache/clear')
     .reply(200, {
       "msg": "Cleared."
@@ -71,6 +75,15 @@ describe('Cache', function() {
       project.caches('mycache').info(function(err, res) {
         should.not.exist(err);
         res.size.should.equal(1);
+        done();
+      });
+    });
+  });
+  describe('#destroy()', function() {
+    it('should delete a cache', function(done) {
+      project.caches('mycache').destroy(function(err, res) {
+        should.not.exist(err);
+        res.msg.should.equal('Deleted');
         done();
       });
     });
