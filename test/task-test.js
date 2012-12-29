@@ -9,7 +9,7 @@ var ironio = require('../')('oauth2 token')
 
 describe('Task', function() {
   before(function(done) {
-    var projectPath = '/1/projects/000000000000000000000000';
+    var projectPath = '/2/projects/000000000000000000000000';
     nock(host)
     .get(projectPath + '/tasks')
     .reply(200, {
