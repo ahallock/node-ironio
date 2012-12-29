@@ -43,8 +43,8 @@ c.get('key', function(err, res) {
 
 // IronWorker
 
-// Queue a task
-project.tasks.queue({ code_name: 'myworker', payload: 'payload'}, function(err, res) {
+// Enqueue a task
+project.tasks.queue({ code_name: 'myworker', payload: 'payload' }, function(err, res) {
 
 });
 ```
@@ -54,3 +54,4 @@ See the test directory for more examples.
 * IronWorker code package endpoints
 * CI for uploading IronWorker modules
 * Better configuration handling 
+* More documentation and examples
