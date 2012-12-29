@@ -53,6 +53,8 @@ describe('Cache', function() {
       "key": "ITEM KEY",
       "value": "ITEM VALUE"
     })
+    .get(projectPath + '/caches/mycache/items/key2')
+    .reply(404, {"msg":"Key not found."}) 
     .delete(projectPath + '/caches/mycache/items/key')
     .reply(200, {
       "msg": "Deleted."
@@ -117,11 +119,16 @@ describe('Cache', function() {
   });
   describe('#get()', function() {
     it('should get value at key', function(done) {
-      project.caches('mycache').get('key', function(err, res) {
+      project.caches('mycache').get('key', function(err, val) {
         should.not.exist(err);
-        res.cache.should.equal('CACHE NAME');
-        res.key.should.equal('ITEM KEY');
-        res.value.should.equal('ITEM VALUE');
+        val.should.equal('ITEM VALUE');
+        done();
+      });
+    });
+    it('should return undefined for non-existent key', function(done) {
+      project.caches('mycache').get('key2', function(err, val) {
+        should.not.exist(err);
+        should.not.exist(val);
         done();
       });
     });

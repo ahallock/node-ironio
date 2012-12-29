@@ -11,7 +11,7 @@ for more details. node-ironio is inspired by seebees' ironmq module: https://git
 var ironio = require('ironio')('OAuth token')
   , project = ironio.projects('Project ID');
 
-// IronMq
+// IronMQ
 var q = project.queues('myqueue');
 
 // Get a message
@@ -37,8 +37,8 @@ c.put('key', 'value', function(err) {
 });
 
 // Get an item from the cache
-c.get('key', function(err, res) {
-
+c.get('key', function(err, val) {
+  // do something with the val
 });
 
 // IronWorker
