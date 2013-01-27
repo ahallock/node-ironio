@@ -63,7 +63,7 @@ describe('Queue', function() {
     .reply(200, {
       "messages": [
         {
-          "id": 1,
+          "id": "1",
           "body": "first message body",
           "timeout": 600
         }
@@ -74,7 +74,7 @@ describe('Queue', function() {
     .reply(200, {
       "messages": [
         {
-          "id": 1,
+          "id": "1",
           "body": "first message body",
           "timeout": 600
         }
@@ -84,6 +84,29 @@ describe('Queue', function() {
     .delete(projectPath + '/queues/myqueue/messages/1')
     .reply(200, {
       "msg": "Deleted"
+    })
+    .get(projectPath + '/queues/myqueue/messages/peek?n=100')
+    .reply(200, {
+      "messages": [
+        {
+         "id": '1',
+         "body": "first message body",
+         "timeout": 600
+        },
+        {
+           "id": '2',
+           "body": "second message body",
+           "timeout": 600
+        }
+      ]
+    })
+    .post(projectPath + '/queues/myqueue/messages/1/touch')
+    .reply(200, {
+      "msg": "Touched"
+    })
+    .post(projectPath + '/queues/myqueue/messages/1/release')
+    .reply(200, {
+      "msg": "Released"
     });
     done();
   });
@@ -133,7 +156,7 @@ describe('Queue', function() {
     it('should return a message', function(done) {
       project.queues('myqueue').get(function(err, message) {
         should.not.exist(err);
-        message.id.should.equal(1);
+        message.id.should.equal('1');
         message.body.should.equal('first message body');
         message.timeout.should.equal(600);
         done();
@@ -186,7 +209,7 @@ describe('Queue', function() {
   });
   describe('#del()', function() {
     it('should delete a message', function(done) {
-      project.queues('myqueue').del(123, function(err, res) {
+      project.queues('myqueue').del('123', function(err, res) {
         should.not.exist(err);
         res.msg.should.equal('Deleted');
         done();
@@ -201,6 +224,31 @@ describe('Queue', function() {
           res.msg.should.equal('Deleted');
           done();
         });
+      });
+    });
+  });
+  describe('#peek()', function() {
+    it('should return next messages in the queue', function(done) {
+      project.queues('myqueue').peek(100, function(err, messages) {
+        should.not.exist(err);
+        messages.length.should.equal(2);
+        done();
+      });
+    });
+  });
+  describe('#touch', function() {
+    it('should touch a message', function(done) {
+      project.queues('myqueue').touch('1', function(err, res) {
+        res.msg.should.equal('Touched');
+        done();
+      });
+    });
+  });
+  describe('#release', function() {
+    it('should release a message', function(done) {
+      project.queues('myqueue').release('1', function(err, res) {
+        res.msg.should.equal('Released');
+        done();
       });
     });
   });
