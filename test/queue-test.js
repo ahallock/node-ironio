@@ -137,6 +137,100 @@ describe('Queue', function() {
     .post(projectPath + '/queues/myqueue/messages/1/release')
     .reply(200, {
       "msg": "Released"
+    })
+    .post(projectPath + '/queues/myqueue/subscribers', {
+      "subscribers": [
+        { "url": "http://example.com/ironmq_push_2" }
+      ]
+    })
+    .reply(200, {
+      "id":"50eb546d3264140e8638a7e5",
+      "name":"pushq-demo-1",
+      "size":7,
+      "total_messages":7,
+      "project_id":"4fd2729368a0197d1102056b",
+      "retries":3,
+      "push_type":"multicast",
+      "retries_delay":60,
+      "subscribers":[
+        { "url":"http://example.com/ironmq_push_2" }
+      ]
+    })
+    .post(projectPath + '/queues/myqueue/subscribers', {
+      "subscribers": [
+        { "url": "http://example.com/ironmq_push_2" },
+        { "url": "http://example.com/ironmq_push_3" }
+      ]
+    })
+    .reply(200, {
+      "id":"50eb546d3264140e8638a7e5",
+      "name":"pushq-demo-1",
+      "size":7,
+      "total_messages":7,
+      "project_id":"4fd2729368a0197d1102056b",
+      "retries":3,
+      "push_type":"multicast",
+      "retries_delay":60,
+      "subscribers":[
+        { "url":"http://example.com/ironmq_push_2" },
+        { "url": "http://example.com/ironmq_push_3" }
+      ]
+    })
+   .delete(projectPath + '/queues/myqueue/subscribers', {
+      "subscribers": [
+        { "url": "http://example.com/ironmq_push_2" }
+      ]
+    })
+    .reply(200, {
+      "id":"50eb546d3264140e8638a7e5",
+      "name":"pushq-demo-1",
+      "size":7,
+      "total_messages":7,
+      "project_id":"4fd2729368a0197d1102056b",
+      "retries":3,
+      "push_type":"multicast",
+      "retries_delay":60,
+      "subscribers":[
+      ]
+    })
+    .delete(projectPath + '/queues/myqueue/subscribers', {
+      "subscribers": [
+        { "url": "http://example.com/ironmq_push_2" },
+      ]
+    })
+    .reply(200, {
+      "id":"50eb546d3264140e8638a7e5",
+      "name":"pushq-demo-1",
+      "size":7,
+      "total_messages":7,
+      "project_id":"4fd2729368a0197d1102056b",
+      "retries":3,
+      "push_type":"multicast",
+      "retries_delay":60,
+      "subscribers":[
+        { "url": "http://example.com/ironmq_push_3" }
+      ]
+    })
+    .get(projectPath + '/queues/myqueue/messages/1/subscribers')
+    .reply(200, {
+      "subscribers":[
+        {
+          "retries_delay":60,
+          "retries_remaining":2,
+          "status_code":200,
+          "status":"deleted",
+          "url":"http://mysterious-brook-1807.herokuapp.com/ironmq_push_2",
+          "id":"5831237764476661217"
+        },
+        {
+          "retries_delay":60,
+          "retries_remaining":2,
+          "status_code":200,
+          "status":"deleted",
+          "url":"http://mysterious-brook-1807.herokuapp.com/ironmq_push_1",
+          "id":"5831237764476661218"
+        }
+      ]
     });
     done();
   });
@@ -302,6 +396,54 @@ describe('Queue', function() {
     it('should release a message', function(done) {
       project.queues('myqueue').release('1', function(err, res) {
         res.msg.should.equal('Released');
+        done();
+      });
+    });
+  });
+  describe('#subscribe', function() {
+    it('should add a subscriber', function(done) {
+      var url = 'http://example.com/ironmq_push_2';
+      project.queues('myqueue').subscribe(url, function(err, res) {
+        res.subscribers.length.should.equal(1);
+        res.subscribers[0].url.should.equal(url);
+        done();
+      });
+    });
+    it('should add subscribers', function(done) {
+      var urls = [
+          'http://example.com/ironmq_push_2'
+        , 'http://example.com/ironmq_push_3'
+      ];
+      project.queues('myqueue').subscribe(urls, function(err, res) {
+        res.subscribers.length.should.equal(2);
+        res.subscribers[0].url.should.equal(urls[0]);
+        res.subscribers[1].url.should.equal(urls[1]);
+        done();
+      });
+    });
+  });
+  describe('#unsubscribe', function() {
+    it('should remove a subscriber', function(done) {
+      var url = 'http://example.com/ironmq_push_2';
+      project.queues('myqueue').unsubscribe(url, function(err, res) {
+        res.subscribers.length.should.equal(0);
+        done();
+      });
+    });
+    it('should remove subscribers', function(done) {
+      var urls = [
+          'http://example.com/ironmq_push_2'
+      ];
+      project.queues('myqueue').unsubscribe(urls, function(err, res) {
+        res.subscribers.length.should.equal(1);
+        done();
+      });
+    });
+  });
+  describe('#subscribers', function() {
+    it('should get message subscribers', function(done) {
+      project.queues('myqueue').subscribers('1', function(err, res) {
+        res.subscribers.length.should.equal(2);
         done();
       });
     });
