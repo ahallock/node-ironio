@@ -21,6 +21,17 @@ q.get(function(err, message) {
   message.del(function(err) {
 
   });
+  // need more time?
+  // touch the message
+  message.touch(function(err) {
+
+  });
+
+  // can't process the message
+  // release the message
+  message.release(function(err) {
+
+  });
 });
 
 // Enqueue a message

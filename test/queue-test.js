@@ -81,6 +81,28 @@ describe('Queue', function() {
       ],
       "timeout": 600
     })
+    .get(projectPath + '/queues/myqueue/messages')
+    .reply(200, {
+      "messages": [
+        {
+          "id": "1",
+          "body": "first message body",
+          "timeout": 600
+        }
+      ],
+      "timeout": 600
+    })
+    .get(projectPath + '/queues/myqueue/messages')
+    .reply(200, {
+      "messages": [
+        {
+          "id": "1",
+          "body": "first message body",
+          "timeout": 600
+        }
+      ],
+      "timeout": 600
+    })
     .delete(projectPath + '/queues/myqueue/messages/1')
     .reply(200, {
       "msg": "Deleted"
@@ -103,6 +125,14 @@ describe('Queue', function() {
     .post(projectPath + '/queues/myqueue/messages/1/touch')
     .reply(200, {
       "msg": "Touched"
+    })
+    .post(projectPath + '/queues/myqueue/messages/1/touch')
+    .reply(200, {
+      "msg": "Touched"
+    })
+    .post(projectPath + '/queues/myqueue/messages/1/release')
+    .reply(200, {
+      "msg": "Released"
     })
     .post(projectPath + '/queues/myqueue/messages/1/release')
     .reply(200, {
@@ -222,6 +252,30 @@ describe('Queue', function() {
         msg.del(function(err, res) {
           should.not.exist(err);
           res.msg.should.equal('Deleted');
+          done();
+        });
+      });
+    });
+  });
+  describe('#msg.touch()', function() {
+    // kinky
+    it('should touch itself', function(done) {
+      project.queues('myqueue').get(function(err, msg) {
+        msg.touch(function(err, res) {
+          should.not.exist(err);
+          res.msg.should.equal('Touched');
+          done();
+        });
+      });
+    });
+  });
+  describe('#msg.release()', function() {
+    // kinky
+    it('should release itself', function(done) {
+      project.queues('myqueue').get(function(err, msg) {
+        msg.release(function(err, res) {
+          should.not.exist(err);
+          res.msg.should.equal('Released');
           done();
         });
       });
