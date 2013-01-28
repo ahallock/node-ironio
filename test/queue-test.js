@@ -231,7 +231,28 @@ describe('Queue', function() {
           "id":"5831237764476661218"
         }
       ]
-    });
+    })
+    .post(projectPath + '/queues/myqueue', {
+      "push_type":"multicast",
+       "subscribers": [
+         {"url": "http://mysterious-brook-1807.herokuapp.com/ironmq_push_1"},
+         {"url": "http://mysterious-brook-1807.herokuapp.com/ironmq_push_2"}
+       ]
+    })
+    .reply(200, {
+      "id":"50eb546d3264140e8638a7e5",
+      "name":"pushq-demo-1",
+      "size":7,
+      "total_messages":7,
+      "project_id":"4fd2729368a0197d1102056b",
+      "retries":3,
+      "push_type":"multicast",
+      "retries_delay":60,
+      "subscribers":[
+        {"url":"http://mysterious-brook-1807.herokuapp.com/ironmq_push_1"},
+        {"url":"http://mysterious-brook-1807.herokuapp.com/ironmq_push_2"}
+      ]
+     });
     done();
   });
   after(function(done) {
@@ -254,6 +275,22 @@ describe('Queue', function() {
       project.queues('myqueue').info(function(err, info) {
         should.not.exist(err);
         info.size.should.equal("10");
+        done(); 
+      });
+    });
+  });
+  describe('#update()', function() {
+    it('should update the queue', function(done) {
+      var body = {
+        "push_type":"multicast",
+         "subscribers": [
+           {"url": "http://mysterious-brook-1807.herokuapp.com/ironmq_push_1"},
+           {"url": "http://mysterious-brook-1807.herokuapp.com/ironmq_push_2"}
+         ]
+      };
+      project.queues('myqueue').update(body, function(err, res) {
+        should.not.exist(err);
+        res.subscribers.length.should.equal(2);
         done(); 
       });
     });
