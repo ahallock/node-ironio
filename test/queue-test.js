@@ -122,19 +122,23 @@ describe('Queue', function() {
         }
       ]
     })
-    .post(projectPath + '/queues/myqueue/messages/1/touch')
+    .post(projectPath + '/queues/myqueue/messages/1/touch', {})
     .reply(200, {
       "msg": "Touched"
     })
-    .post(projectPath + '/queues/myqueue/messages/1/touch')
+    .post(projectPath + '/queues/myqueue/messages/1/touch', {})
     .reply(200, {
       "msg": "Touched"
     })
-    .post(projectPath + '/queues/myqueue/messages/1/release')
+    .post(projectPath + '/queues/myqueue/messages/1/release', { "delay":0 })
     .reply(200, {
       "msg": "Released"
     })
-    .post(projectPath + '/queues/myqueue/messages/1/release')
+    .post(projectPath + '/queues/myqueue/messages/1/release', { "delay":0 })
+    .reply(200, {
+      "msg": "Released"
+    })
+    .post(projectPath + '/queues/myqueue/messages/1/release', { "delay":60 })
     .reply(200, {
       "msg": "Released"
     })
@@ -432,6 +436,12 @@ describe('Queue', function() {
   describe('#release', function() {
     it('should release a message', function(done) {
       project.queues('myqueue').release('1', function(err, res) {
+        res.msg.should.equal('Released');
+        done();
+      });
+    });
+    it('should release a message with a delay', function(done) {
+      project.queues('myqueue').release('1', 60, function(err, res) {
         res.msg.should.equal('Released');
         done();
       });
