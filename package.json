@@ -4,7 +4,12 @@
   "description": "iron.io client",
   "main": "index.js",
   "author": "Andrew Hallock <andrew@blazelocal.com>",
-  "keywords": ["ironio", "ironmq", "ironcache", "ironworker"],
+  "keywords": [
+    "ironio",
+    "ironmq",
+    "ironcache",
+    "ironworker"
+  ],
   "scripts": {
     "test": "node_modules/mocha/bin/mocha test/*-test.js"
   },
@@ -12,8 +17,8 @@
     "type": "git",
     "url": "git://github.com/ahallock/node-ironio.git"
   },
-  "bugs" : {
-    "url" : "http://github.com/ahallock/node-ironio/issues"
+  "bugs": {
+    "url": "http://github.com/ahallock/node-ironio/issues"
   },
   "licenses": [
     {
@@ -23,7 +28,7 @@
   ],
   "readmeFilename": "README.md",
   "dependencies": {
-    "request": "~2.12.0"
+    "request": "2.14.0"
   },
   "devDependencies": {
     "should": "~1.2.1",
