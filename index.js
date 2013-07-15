@@ -4,7 +4,6 @@
 var Cache = require('./lib/cache')
   , Queue = require('./lib/queue')
   , task = require('./lib/task')
-  , join = require('path').join
   , querystring = require('querystring')
   ;
 
@@ -21,7 +20,7 @@ function ironio(token, options) {
   var path = 'projects';
 
   function projects(id) {
-    var projectPath = join(path, id);
+    var projectPath = path + '/' +  id;
 
     function createListFn(name) {
       return function(params, fn) {
@@ -30,7 +29,7 @@ function ironio(token, options) {
           params = null;
         }
         
-        var servicePath = join(projectPath, name) +
+        var servicePath = projectPath + '/' + name +
           (params ? '?' + querystring.stringify(params) : '');
          
         api.get(servicePath, fn);
@@ -40,7 +39,7 @@ function ironio(token, options) {
     function createService(type) {
       var name = type.name.toLowerCase() + 's';
       function service(id) {
-        return new type(join(projectPath, name, id), api);
+        return new type(projectPath + '/' + name + '/' + id, api);
       }
       service.list = createListFn(name);
       return service;
@@ -48,7 +47,7 @@ function ironio(token, options) {
 
     // 'tasks' needs some specialization
     // to make the API nicer
-    var tasks = task(join(projectPath, 'tasks'), api);
+    var tasks = task(projectPath + '/' + 'tasks', api);
     tasks.list = createListFn('tasks');
     tasks.scheduled.list = createListFn('schedules');
 
