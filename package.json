@@ -1,6 +1,6 @@
 {
   "name": "node-ironio",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "iron.io client",
   "main": "index.js",
   "author": "Andrew Hallock <andrew@blazelocal.com>",
