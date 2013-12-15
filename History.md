@@ -5,6 +5,6 @@
   * add: support for 'Get Info About A Code Package' endpoint
   * add: support for 'Delete a Code Package' endpoint
   * add: support for 'Download a Code Package' endpoint
-	* add: support for 'List Code Package Revisions' endpoint
-	* add: `api.downalod` to support code package download
-	* add: expose `CodePackage` module
+  * add: support for 'List Code Package Revisions' endpoint
+  * add: `api.downalod` to support code package download
+  * add: expose `CodePackage` module
