@@ -35,7 +35,7 @@ q.get(function(err, message) {
 });
 
 // Enqueue a message
-q.post('message', function(err, res) {
+q.post('message', function(err, res, body) {
 
 });
 
@@ -55,7 +55,7 @@ c.get('key', function(err, val) {
 // IronWorker
 
 // Enqueue a task
-project.tasks.queue({ code_name: 'myworker', payload: 'payload' }, function(err, res) {
+project.tasks.queue({ code_name: 'myworker', payload: 'payload' }, function(err, res, body) {
 
 });
 ```
