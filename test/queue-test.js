@@ -11,7 +11,7 @@ describe('Queue', function() {
   before(function(done) {
     var messages = {"messages":[{"body":"This is my message 1."},{"body":"This is my message 2.","timeout":30,"delay":2,"expires_in":86400}]};
     var stringMessage = {"messages":[{"body":"This is the message"}]};
-    var objectMessage = {"messages": [{ 
+    var objectMessage = {"messages": [{
           body: 'This is the message.'
         , timeout: 30
         , delay: 2
@@ -279,7 +279,7 @@ describe('Queue', function() {
       project.queues('myqueue').info(function(err, info) {
         should.not.exist(err);
         info.size.should.equal("10");
-        done(); 
+        done();
       });
     });
   });
@@ -295,7 +295,7 @@ describe('Queue', function() {
       project.queues('myqueue').update(body, function(err, res) {
         should.not.exist(err);
         res.subscribers.length.should.equal(2);
-        done(); 
+        done();
       });
     });
   });
@@ -345,30 +345,30 @@ describe('Queue', function() {
         should.not.exist(err);
         res.ids.length.should.equal(2);
         res.msg.should.equal('Messages put on queue.');
-        done(); 
+        done();
       });
     });
     it('should add string message', function(done) {
-      var message = 'This is the message'; 
+      var message = 'This is the message';
       project.queues('myqueue').post(message, function(err, res) {
         should.not.exist(err);
         res.ids.length.should.equal(1);
         res.msg.should.equal('Messages put on queue.');
-        done(); 
+        done();
       });
     });
     it('should add object message', function(done) {
-      var message = { 
+      var message = {
           body: 'This is the message.'
         , timeout: 30
         , delay: 2
         , expires_in: 86400
-      }; 
+      };
       project.queues('myqueue').post(message, function(err, res) {
         should.not.exist(err);
         res.ids.length.should.equal(1);
         res.msg.should.equal('Messages put on queue.');
-        done(); 
+        done();
       });
     });
   });

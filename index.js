@@ -9,10 +9,10 @@ var Cache = require('./lib/cache')
   ;
 
 /**
- * Returns the projects function. 
+ * Returns the projects function.
  *
  * @param {String} token OAuth2 token
- * @param {Object} [options] 
+ * @param {Object} [options]
  * @return {Function} projects
  * @api public
  */
@@ -29,10 +29,10 @@ function ironio(token, options) {
           fn = params;
           params = null;
         }
-        
+
         var servicePath = projectPath + '/' + name +
           (params ? '?' + querystring.stringify(params) : '');
-         
+
         api.get(servicePath, fn);
       };
     }
