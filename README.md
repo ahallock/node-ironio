@@ -55,7 +55,15 @@ c.get('key', function(err, val) {
 // IronWorker
 
 // Enqueue a task
-project.tasks.queue({ code_name: 'myworker', payload: 'payload' }, function(err, res) {
+project.tasks.queue({
+                      code_name: 'code name',
+                      payload: 'payload',
+                      priority: 0,
+                      delay: 0,
+                      label: 'label name',
+                      cluster: 'default'
+                    },
+                    function(err, res) {
 
 });
 ```

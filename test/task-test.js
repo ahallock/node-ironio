@@ -31,7 +31,16 @@ describe('Task', function() {
         }
       ]
     })
-    .post(projectPath + '/tasks', {tasks: [{ code_name: 'code name', payload: 'payload' }]})
+    .post(projectPath + '/tasks', {tasks: [{
+                                            name: 'task name',
+                                            code_name: 'code name',
+                                            payload: 'payload',
+                                            priority: 0,
+                                            delay: 0,
+                                            label: 'test label',
+                                            cluster: 'default'
+                                          }]
+    })
     .reply(200, {
       "msg": "Queued up",
       "tasks": [
@@ -156,7 +165,15 @@ describe('Task', function() {
   });
   describe('#queue()', function() {
     it('should queue a task', function(done) {
-      var body = { code_name: 'code name', payload: 'payload' };
+      var body = {
+        name: 'task name',
+        code_name: 'code name',
+        payload: 'payload',
+        priority: 0,
+        delay: 0,
+        label: 'test label',
+        cluster: 'default'
+      };
       project.tasks.queue(body, function(err, res) {
         should.not.exist(err);
         res.msg.should.equal('Queued up');
