@@ -31,7 +31,15 @@ describe('Task', function() {
         }
       ]
     })
-    .post(projectPath + '/tasks', {tasks: [{ code_name: 'code name', payload: 'payload' }]})
+    .post(projectPath + '/tasks', {tasks: [{
+                                            code_name: 'code name',
+                                            payload: 'payload',
+                                            priority: 0,
+                                            delay: 0,
+                                            label: 'test label',
+                                            cluster: 'default'
+                                          }]
+    })
     .reply(200, {
       "msg": "Queued up",
       "tasks": [
@@ -156,7 +164,14 @@ describe('Task', function() {
   });
   describe('#queue()', function() {
     it('should queue a task', function(done) {
-      var body = { code_name: 'code name', payload: 'payload' };
+      var body = {
+        code_name: 'code name',
+        payload: 'payload',
+        priority: 0,
+        delay: 0,
+        label: 'test label',
+        cluster: 'default'
+      };
       project.tasks.queue(body, function(err, res) {
         should.not.exist(err);
         res.msg.should.equal('Queued up');
@@ -190,7 +205,7 @@ describe('Task', function() {
         res.schedules.length.should.equal(1);
         res.schedules[0].id.should.equal('4eb1b490cddb136065000011');
         done();
-      }); 
+      });
     });
     it('should schedule an array of tasks', function(done) {
       var body = [{
@@ -205,7 +220,7 @@ describe('Task', function() {
         res.schedules.length.should.equal(1);
         res.schedules[0].id.should.equal('4eb1b490cddb136065000011');
         done();
-      }); 
+      });
     });
   });
   describe('#webhook()', function() {
@@ -215,7 +230,7 @@ describe('Task', function() {
         res.id.should.equal('4f3595381cf75447be029da5');
         res.msg.should.equal('Queued up.');
         done();
-      }); 
+      });
     });
   });
   describe('#info()', function() {
@@ -226,7 +241,7 @@ describe('Task', function() {
         res.status.should.equal('complete');
         res.code_name.should.equal('MyWorker');
         done();
-      }); 
+      });
     });
   });
   describe('#log()', function() {
@@ -235,7 +250,7 @@ describe('Task', function() {
         should.not.exist(err);
         res.should.equal('log');
         done();
-      }); 
+      });
     });
   });
   describe('#cancel()', function() {
@@ -244,7 +259,7 @@ describe('Task', function() {
         should.not.exist(err);
         res.msg.should.equal('Cancelled');
         done();
-      }); 
+      });
     });
   });
   describe('#progress()', function() {
@@ -253,7 +268,7 @@ describe('Task', function() {
         should.not.exist(err);
         res.msg.should.equal('Progress set');
         done();
-      }); 
+      });
     });
   });
   describe('#retry()', function() {
@@ -264,7 +279,7 @@ describe('Task', function() {
         res.tasks.length.should.equal(1);
         res.tasks[0].id.should.equal('4eb1b471cddb136065000010');
         done();
-      }); 
+      });
     });
   });
   describe('#scheduled.info()', function() {
@@ -275,7 +290,7 @@ describe('Task', function() {
         res.msg.should.equal('Ran max times.');
         res.status.should.equal('complete');
         done();
-      }); 
+      });
     });
   });
   describe('#scheduled.cancel()', function() {
@@ -284,7 +299,7 @@ describe('Task', function() {
         should.not.exist(err);
         res.msg.should.equal('Cancelled');
         done();
-      }); 
+      });
     });
   });
 });

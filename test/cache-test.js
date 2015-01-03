@@ -54,7 +54,7 @@ describe('Cache', function() {
       "value": "ITEM VALUE"
     })
     .get(projectPath + '/caches/mycache/items/key2')
-    .reply(404, {"msg":"Key not found."}) 
+    .reply(404, {"msg":"Key not found."})
     .delete(projectPath + '/caches/mycache/items/key')
     .reply(200, {
       "msg": "Deleted."
@@ -69,7 +69,7 @@ describe('Cache', function() {
         caches[0].name.should.equal('CACHE NAME');
         caches[0].project_id.should.equal('PROJECT ID');
         done();
-      }); 
+      });
     });
   });
   describe('#info()', function() {
