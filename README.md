@@ -1,3 +1,5 @@
+# NOTICE: I am no longer contributing major features to this project. If you're interested in becoming a collabtorator or taking over the project, send me a message on Twitter https://twitter.com/hallock
+
 # node-ironio 
 
 node-ironio is a Node.js client for IronMQ, IronWorker, and IronCache. See http://www.iron.io
