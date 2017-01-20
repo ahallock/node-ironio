@@ -1,4 +1,4 @@
-### NOTICE: I am no longer contributing major features to this project. If you're interested in becoming a collabtorator or taking over the project, send me a message on Twitter https://twitter.com/hallock
+### NOTICE: I am no longer contributing major features to this project. If you're interested in becoming a collabtorator or taking over the project, please comment on this issue: https://github.com/ahallock/node-ironio/issues/25
 
 # node-ironio 
 
